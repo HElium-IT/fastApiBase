@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: elio
+      POSTGRES_PASSWORD: palomba
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      DATABASE_URL: postgres://elio:palomba@database:5432/mydb
+      PGADMIN_DEFAULT_EMAIL: elio@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: palomba
+    ports:
+      - "8002:80"
+    depends_on:
+      - database
+    networks:
+      - backend
+
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    command: --start
+    depends_on:
+      - database
+    networks:
+      - backend
+
+volumes:
+  db-data:
+
+networks:
+  backend:
