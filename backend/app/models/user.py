@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class User(Base):
-    id: str = Column(String, default=uuid4, primary_key=True, index=True)
+    id: str = Column(String, default=str(uuid4()), primary_key=True, index=True)
     full_name = Column(String, index=True)
     email: str = Column(String, unique=True, index=True, nullable=False)
     hashed_password: str = Column(String, nullable=False)

@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class Item(Base):
-    id: str = Column(String, default=uuid4, primary_key=True, index=True)
+    id: str = Column(String, default=str(uuid4()), primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
     

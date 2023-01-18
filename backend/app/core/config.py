@@ -2,7 +2,9 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     DATABASE_URL: str
-    API_V1_STR: str = "/api/v1"
+    API_V1_STR: str
+    FIRST_SUPERUSER: str
+    FIRST_SUPERUSER_PASSWORD: str
 
     USERS_OPEN_REGISTRATION: bool
 
