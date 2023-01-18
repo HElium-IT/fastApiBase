@@ -12,7 +12,7 @@ from app.database.session import SessionLocal
 
 
 reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f"api/login/access-token"
+    tokenUrl=f"{settings.API_V1_STR}/login/access-token"
 )
 
 def get_db() -> Generator:

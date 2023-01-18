@@ -20,3 +20,7 @@ def test_email(
     """
     send_test_email(email_to=email_to)
     return {"msg": "Test email sent"}
+
+@router.get('/status')
+def status():
+    return {'api': 'Ok'}
