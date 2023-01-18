@@ -21,9 +21,9 @@ class ItemUpdate(ItemBase):
 
 # Properties shared by models stored in DB
 class ItemInDBBase(ItemBase):
-    id: int
+    id: str
     title: str
-    # owner_id: int
+    # owner_id: str
 
     class Config:
         orm_mode = True

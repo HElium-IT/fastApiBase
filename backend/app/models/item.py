@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 
 from sqlalchemy import Column, ForeignKey, Integer, String
+from uuid import UUID, uuid4
 from sqlalchemy.orm import relationship
 
 from app.database.base import Base
@@ -10,10 +11,10 @@ if TYPE_CHECKING:
 
 
 class Item(Base):
-    id: int = Column(Integer, primary_key=True, index=True)
+    id: str = Column(String, default=uuid4, primary_key=True, index=True)
     title = Column(String, index=True)
     description = Column(String, index=True)
     
-    owner_id = Column(Integer, ForeignKey("user.id"))
+    owner_id = Column(String, ForeignKey("user.id"))
     
     owner: "User" = relationship("User", back_populates="items")

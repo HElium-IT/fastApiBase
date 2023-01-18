@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING, List
 
 from sqlalchemy import Boolean, Column, Integer, String
+from uuid import UUID, uuid4
 from sqlalchemy.orm import relationship
 
 from app.database.base import Base
@@ -10,7 +11,7 @@ if TYPE_CHECKING:
 
 
 class User(Base):
-    id: int = Column(Integer, primary_key=True, index=True)
+    id: str = Column(String, default=uuid4, primary_key=True, index=True)
     full_name = Column(String, index=True)
     email: str = Column(String, unique=True, index=True, nullable=False)
     hashed_password: str = Column(String, nullable=False)
