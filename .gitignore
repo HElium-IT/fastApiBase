@@ -1,2 +1,6 @@
 __pycache__/  # Python cache files
+*.py[cod]
+*$py.class
+*.pyc
+
 .vscode/  # VS Code settings
