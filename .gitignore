@@ -4,3 +4,4 @@ __pycache__/  # Python cache files
 *.pyc
 
 .vscode/  # VS Code settings
+.env/ # Python virtual environment

@@ -3,11 +3,11 @@ version: '3'
 services:
 
   database:
-    image: postgres
+    image: postgres:15.3-alpine
     environment:
-      POSTGRES_USER: elio
-      POSTGRES_PASSWORD: palomba
-      POSTGRES_DB: mydb
+      POSTGRES_USER: default_user
+      POSTGRES_PASSWORD: default_password
+      POSTGRES_DB: default_db
     ports:
       - "5432:5432"
     volumes:
@@ -18,13 +18,11 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      DATABASE_URL: postgres://elio:palomba@database:5432/mydb
-      PGADMIN_DEFAULT_EMAIL: elio@pgadmin.org
-      PGADMIN_DEFAULT_PASSWORD: palomba
+      DATABASE_URL: postgres://default_user:default_password@database:5432/default_db
+      PGADMIN_DEFAULT_EMAIL: default_user@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: default_password
     ports:
       - "8002:80"
-    depends_on:
-      - database
     networks:
       - backend
 
@@ -35,8 +33,8 @@ services:
     ports:
       - "8000:8000"
     command: --start
-    depends_on:
-      - database
+    environment:
+      DATABASE_URL: postgresql://default_user:default_password@database:5432/default_db
     networks:
       - backend
 
