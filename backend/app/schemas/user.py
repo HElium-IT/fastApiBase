@@ -7,8 +7,9 @@ from pydantic import BaseModel, EmailStr
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
-    is_superuser: bool = False
+    is_superuser: Optional[bool] = False
     full_name: Optional[str] = None
+    password: Optional[str] = None
 
 
 # Properties to receive via API on creation
@@ -19,11 +20,12 @@ class UserCreate(UserBase):
 
 # Properties to receive via API on update
 class UserUpdate(UserBase):
-    password: Optional[str] = None
+    password: Optional[str]
+    full_name: Optional[str]
 
 
 class UserInDBBase(UserBase):
-    id: Optional[str] = None
+    id: str
 
     class Config:
         orm_mode = True

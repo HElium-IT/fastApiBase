@@ -29,20 +29,43 @@ function do_migration(){
   alembic revision --autogenerate -m "$1"
 }
 
+function do_test(){
+  # install pytest
+  pip install pytest
+  local path="$1"
+  if [ -z "$path" ]; then
+    path=app/tests
+  fi
+  echo "testing $path"
+  pytest "$path"
+}
+
 while [[ $# -gt 0 ]]
 do
   key="$1"
+  value="$2"
   case $key in
     -s|--start)
       wait_db
       upgrade_alembic
       start
-      shift
+      exit 0
       ;;
     -m|--migrate)
       wait_db
-      do_migration "$2"
-      shift
+      upgrade_alembic
+      do_migration "$value"
+      exit 0
+      ;;
+    -t|--test)
+      wait_db
+      upgrade_alembic
+      do_test "$value"
+      exit 0
+      ;;
+    *)
+      echo "Unknown option $1"
+      exit 1
       ;;
   esac
 done

@@ -8,6 +8,7 @@ from app.core.config import settings
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from app.tests.utils.utils import random_email, random_lower_string
+from app.core.security import verify_password
 
 
 def user_authentication_headers(
@@ -17,10 +18,10 @@ def user_authentication_headers(
 
     r = client.post(f"{settings.API_V1_STR}/login/access-token", data=data)
     response = r.json()
+    print(f"data: {data}\n response: {r}\n response.json: {response}")
     auth_token = response["access_token"]
     headers = {"Authorization": f"Bearer {auth_token}"}
     return headers
-
 
 def create_random_user(db: Session) -> User:
     email = random_email()
@@ -30,21 +31,41 @@ def create_random_user(db: Session) -> User:
     return user
 
 
-def authentication_token_from_email(
-    *, client: TestClient, email: str, db: Session
+def authentication_token_for_user(
+    *, client: TestClient, db: Session
 ) -> Dict[str, str]:
     """
     Return a valid token for the user with given email.
 
     If the user doesn't exist it is created first.
     """
-    password = random_lower_string()
-    user = crud.user.get_by_email(db, email=email)
-    if not user:
-        user_in_create = UserCreate(username=email, email=email, password=password)
+    
+    user = crud.user.get_by_email(db, email=settings.EMAIL_TEST_USER)
+    if user is None:
+        print("creating test user")
+        user_in_create = UserCreate(email=settings.EMAIL_TEST_USER, password=settings.PASSWORD_TEST_USER)
         user = crud.user.create(db, obj_in=user_in_create)
     else:
-        user_in_update = UserUpdate(password=password)
+        print("updating test user")
+        user_in_update = UserUpdate(password=settings.PASSWORD_TEST_USER)
         user = crud.user.update(db, db_obj=user, obj_in=user_in_update)
+    
+    db.commit()
+    print(f"testingUser: {crud.user.get(db=db, id=user.id).__dict__}")
+    return user_authentication_headers(client=client, email=settings.EMAIL_TEST_USER, password=settings.PASSWORD_TEST_USER)
 
-    return user_authentication_headers(client=client, email=email, password=password)
+
+def authentication_token_for_super_user(
+    *, client: TestClient, db: Session
+) -> Dict[str, str]:
+    user = crud.user.get_by_email(db, email=settings.FIRST_SUPERUSER)
+    if user is None:
+        print("creating test superUser")
+        user_in_create = UserCreate(email=settings.FIRST_SUPERUSER, password=settings.FIRST_SUPERUSER_PASSWORD, is_superuser=True)
+        user = crud.user.create(db, obj_in=user_in_create)
+        db.commit()
+    
+    print(f"testingSuperUser: {user.__dict__}")
+    return user_authentication_headers(
+        client=client, email=settings.FIRST_SUPERUSER, password=settings.FIRST_SUPERUSER_PASSWORD
+    )

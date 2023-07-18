@@ -6,19 +6,19 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
-from app.api import deps
+from app import dependencies as deps
 from app.core import security
 from app.core.config import settings
-from app.core.security import get_password_hash
 from app.core.utils import (
     generate_password_reset_token,
     send_reset_password_email,
     verify_password_reset_token,
 )
+from app.decorators import db_commit
 
 router = APIRouter()
 
-
+@db_commit
 @router.post("/login/access-token", response_model=schemas.Token)
 def login_access_token(
     db: Session = Depends(deps.get_db), form_data: OAuth2PasswordRequestForm = Depends()
@@ -41,7 +41,6 @@ def login_access_token(
         "token_type": "bearer",
     }
 
-
 @router.post("/login/test-token", response_model=schemas.User)
 def test_token(current_user: models.User = Depends(deps.get_current_user)) -> Any:
     """
@@ -49,7 +48,7 @@ def test_token(current_user: models.User = Depends(deps.get_current_user)) -> An
     """
     return current_user
 
-
+@db_commit
 @router.post("/password-recovery/{email}", response_model=schemas.Msg)
 def recover_password(email: str, db: Session = Depends(deps.get_db)) -> Any:
     """
@@ -68,7 +67,7 @@ def recover_password(email: str, db: Session = Depends(deps.get_db)) -> Any:
     )
     return {"msg": "Password recovery email sent"}
 
-
+@db_commit
 @router.post("/reset-password/", response_model=schemas.Msg)
 def reset_password(
     token: str = Body(...),
@@ -89,8 +88,5 @@ def reset_password(
         )
     elif not crud.user.is_active(user):
         raise HTTPException(status_code=400, detail="Inactive user")
-    hashed_password = get_password_hash(new_password)
-    user.hashed_password = hashed_password
-    db.add(user)
-    db.commit()
+    crud.user.update(db, db_obj=user, obj_in={"password": new_password})
     return {"msg": "Password updated successfully"}

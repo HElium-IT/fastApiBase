@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI
 from app.api import api_v1
 from app.core.startup import startup
 

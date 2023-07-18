@@ -11,10 +11,10 @@ def test_get_access_token(client: TestClient) -> None:
         "password": settings.FIRST_SUPERUSER_PASSWORD,
     }
     r = client.post(f"{settings.API_V1_STR}/login/access-token", data=login_data)
-    tokens = r.json()
+    result = r.json()
     assert r.status_code == 200
-    assert "access_token" in tokens
-    assert tokens["access_token"]
+    assert "access_token" in result
+    assert result["access_token"]
 
 
 def test_use_access_token(

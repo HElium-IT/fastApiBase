@@ -14,6 +14,7 @@ def test_get_users_superuser_me(
 ) -> None:
     r = client.get(f"{settings.API_V1_STR}/users/me", headers=superuser_token_headers)
     current_user = r.json()
+    print(f"current_superuser: {current_user}")
     assert current_user
     assert current_user["is_active"] is True
     assert current_user["is_superuser"]
@@ -25,6 +26,7 @@ def test_get_users_normal_user_me(
 ) -> None:
     r = client.get(f"{settings.API_V1_STR}/users/me", headers=normal_user_token_headers)
     current_user = r.json()
+    print(f"current_user: {current_user}")
     assert current_user
     assert current_user["is_active"] is True
     assert current_user["is_superuser"] is False
@@ -108,12 +110,10 @@ def test_retrieve_users(
     password = random_lower_string()
     user_in = UserCreate(email=username, password=password)
     crud.user.create(db, obj_in=user_in)
-
     username2 = random_email()
     password2 = random_lower_string()
     user_in2 = UserCreate(email=username2, password=password2)
     crud.user.create(db, obj_in=user_in2)
-
     r = client.get(f"{settings.API_V1_STR}/users/", headers=superuser_token_headers)
     all_users = r.json()
 

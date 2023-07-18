@@ -4,11 +4,12 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
-from app.api import deps
+from app import dependencies as deps
+from app.decorators import db_commit
 
 router = APIRouter()
 
-
+@db_commit
 @router.get("/", response_model=List[schemas.Item])
 def read_items(
     db: Session = Depends(deps.get_db),
@@ -27,7 +28,7 @@ def read_items(
         )
     return items
 
-
+@db_commit
 @router.post("/", response_model=schemas.Item)
 def create_item(
     *,
@@ -41,7 +42,7 @@ def create_item(
     item = crud.item.create_with_owner(db=db, obj_in=item_in, owner_id=current_user.id)
     return item
 
-
+@db_commit
 @router.put("/{id}", response_model=schemas.Item)
 def update_item(
     *,
@@ -61,7 +62,7 @@ def update_item(
     item = crud.item.update(db=db, db_obj=item, obj_in=item_in)
     return item
 
-
+@db_commit
 @router.get("/{id}", response_model=schemas.Item)
 def read_item(
     *,

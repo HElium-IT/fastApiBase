@@ -36,7 +36,7 @@ import app.models
 
 # TODO: investigate why database_url is not found properly in env
 def get_url():
-    return os.getenv("DATABASE_URL", "postgresql://elio:palomba@database:5432/mydb")
+    return os.getenv("DATABASE_URL", "")
 
 
 def run_migrations_offline():

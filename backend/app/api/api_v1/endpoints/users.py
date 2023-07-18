@@ -6,13 +6,14 @@ from pydantic.networks import EmailStr
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
-from app.api import deps
+from app import dependencies as deps
 from app.core.config import settings
 from app.core.utils import send_new_account_email
+from app.decorators import db_commit
 
 router = APIRouter()
 
-
+@db_commit
 @router.get("/", response_model=List[schemas.User])
 def read_users(
     db: Session = Depends(deps.get_db),
@@ -26,7 +27,7 @@ def read_users(
     users = crud.user.get_multi(db, skip=skip, limit=limit)
     return users
 
-
+@db_commit
 @router.post("/", response_model=schemas.User)
 def create_user(
     *,
@@ -50,7 +51,7 @@ def create_user(
         )
     return user
 
-
+@db_commit
 @router.put("/me", response_model=schemas.User)
 def update_user_me(
     *,
@@ -74,7 +75,7 @@ def update_user_me(
     user = crud.user.update(db, db_obj=current_user, obj_in=user_in)
     return user
 
-
+@db_commit
 @router.get("/me", response_model=schemas.User)
 def read_user_me(
     db: Session = Depends(deps.get_db),
@@ -85,7 +86,7 @@ def read_user_me(
     """
     return current_user
 
-
+@db_commit
 @router.post("/open", response_model=schemas.User)
 def create_user_open(
     *,
@@ -112,7 +113,7 @@ def create_user_open(
     user = crud.user.create(db, obj_in=user_in)
     return user
 
-
+@db_commit
 @router.get("/{user_id}", response_model=schemas.User)
 def read_user_by_id(
     user_id: str,
@@ -131,7 +132,7 @@ def read_user_by_id(
         )
     return user
 
-
+@db_commit
 @router.put("/{user_id}", response_model=schemas.User)
 def update_user(
     *,
