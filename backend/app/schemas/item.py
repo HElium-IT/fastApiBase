@@ -1,6 +1,8 @@
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, UUID4
+
+from app.schemas.custom_pydantics import UUIDModelMixin
 
 
 # Shared properties
@@ -20,19 +22,13 @@ class ItemUpdate(ItemBase):
 
 
 # Properties shared by models stored in DB
-class ItemInDBBase(ItemBase):
-    id: str
+class ItemInDBBase(ItemBase, UUIDModelMixin):
     title: str
-    # owner_id: str
-
-    class Config:
-        orm_mode = True
-
+    owner_id: Optional[UUID4] = None
 
 # Properties to return to client
 class Item(ItemInDBBase):
     pass
-
 
 # Properties properties stored in DB
 class ItemInDB(ItemInDBBase):

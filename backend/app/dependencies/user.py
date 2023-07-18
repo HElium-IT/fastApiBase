@@ -23,7 +23,8 @@ def get_current_user(
             token, settings.JWT_PRIVATE_KEY, algorithms=[security.ALGORITHM]
         )
         token_data = schemas.TokenPayload(**payload)
-    except (jwt.JWTError, ValidationError):
+    except (jwt.JWTError, jwt.ExpiredSignatureError, jwt.JWTClaimsError, ValidationError) as e:
+        print("HTTP_403_FORBIDDEN: ", e)
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Could not validate credentials",

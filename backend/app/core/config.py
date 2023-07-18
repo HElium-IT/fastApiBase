@@ -8,7 +8,9 @@ class Settings(BaseSettings):
 
     USERS_OPEN_REGISTRATION: bool
 
+    EMAILS_ENABLED: bool
     EMAIL_RESET_TOKEN_EXPIRE_HOURS: int
+
     JWT_PUBLIC_KEY: str
     JWT_PRIVATE_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int

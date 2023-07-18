@@ -1,0 +1,69 @@
+2023-07-18 20:23:32,653 - file_logger - INFO - Calling function test_create_item with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c636d0>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTIsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9._TgtyY1D3WGEhL4FuXG9zm4XuJuCupVncpZXJCHpeok'}, 'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:32,681 - file_logger - INFO - Function test_create_item took 0.027229785919189453 seconds to execute
+2023-07-18 20:23:32,682 - file_logger - INFO - Function test_create_item returned None
+2023-07-18 20:23:32,696 - file_logger - INFO - Calling function test_read_item with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c636d0>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTIsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9._TgtyY1D3WGEhL4FuXG9zm4XuJuCupVncpZXJCHpeok'}, 'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:33,183 - file_logger - INFO - Function test_read_item took 0.48680782318115234 seconds to execute
+2023-07-18 20:23:33,184 - file_logger - INFO - Function test_read_item returned None
+2023-07-18 20:23:33,203 - file_logger - INFO - Calling function test_get_access_token with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f02029cb4c0>}
+2023-07-18 20:23:33,648 - file_logger - INFO - Function test_get_access_token took 0.4437272548675537 seconds to execute
+2023-07-18 20:23:33,649 - file_logger - INFO - Function test_get_access_token returned None
+2023-07-18 20:23:34,100 - file_logger - INFO - Calling function test_use_access_token with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f02029cb4c0>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTQsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9.2Nlxwq49swEJaPK38opLWbjN8p1UNV0C-bCs8DSsjd4'}}
+2023-07-18 20:23:34,112 - file_logger - INFO - Function test_use_access_token took 0.010828256607055664 seconds to execute
+2023-07-18 20:23:34,112 - file_logger - INFO - Function test_use_access_token returned None
+2023-07-18 20:23:34,597 - file_logger - INFO - Calling function test_get_users_superuser_me with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTQsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9.2Nlxwq49swEJaPK38opLWbjN8p1UNV0C-bCs8DSsjd4'}}
+2023-07-18 20:23:34,610 - file_logger - INFO - Function test_get_users_superuser_me took 0.011616706848144531 seconds to execute
+2023-07-18 20:23:34,611 - file_logger - INFO - Function test_get_users_superuser_me returned None
+2023-07-18 20:23:35,517 - file_logger - INFO - Calling function test_get_users_normal_user_me with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'normal_user_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTUsInN1YiI6ImMwMmI4YTg2LTVlNTMtNDRjZC1iNzgxLWExZjExNTRiZmM3OCJ9.oaBNdmoA-0Fd_aEkB7XdbYd0V3AJSHqQ4KoXTEhJxeQ'}}
+2023-07-18 20:23:35,532 - file_logger - INFO - Function test_get_users_normal_user_me took 0.013837575912475586 seconds to execute
+2023-07-18 20:23:35,533 - file_logger - INFO - Function test_get_users_normal_user_me returned None
+2023-07-18 20:23:35,546 - file_logger - INFO - Calling function test_create_user_new_email with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTQsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9.2Nlxwq49swEJaPK38opLWbjN8p1UNV0C-bCs8DSsjd4'}, 'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:36,035 - file_logger - ERROR - Function test_create_user_new_email took 0.4878957271575928 seconds to raise an exception
+2023-07-18 20:23:36,036 - file_logger - ERROR - Function test_create_user_new_email raised an exception: assert None
+2023-07-18 20:23:37,097 - file_logger - INFO - Calling function test_get_existing_user with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTQsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9.2Nlxwq49swEJaPK38opLWbjN8p1UNV0C-bCs8DSsjd4'}, 'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:37,589 - file_logger - INFO - Function test_get_existing_user took 0.49112558364868164 seconds to execute
+2023-07-18 20:23:37,590 - file_logger - INFO - Function test_get_existing_user returned None
+2023-07-18 20:23:37,602 - file_logger - INFO - Calling function test_create_user_existing_email with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTQsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9.2Nlxwq49swEJaPK38opLWbjN8p1UNV0C-bCs8DSsjd4'}, 'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:38,058 - file_logger - INFO - Function test_create_user_existing_email took 0.4548971652984619 seconds to execute
+2023-07-18 20:23:38,059 - file_logger - INFO - Function test_create_user_existing_email returned None
+2023-07-18 20:23:38,071 - file_logger - INFO - Calling function test_create_user_by_normal_user with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'normal_user_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTUsInN1YiI6ImMwMmI4YTg2LTVlNTMtNDRjZC1iNzgxLWExZjExNTRiZmM3OCJ9.oaBNdmoA-0Fd_aEkB7XdbYd0V3AJSHqQ4KoXTEhJxeQ'}}
+2023-07-18 20:23:38,082 - file_logger - INFO - Function test_create_user_by_normal_user took 0.009404420852661133 seconds to execute
+2023-07-18 20:23:38,082 - file_logger - INFO - Function test_create_user_by_normal_user returned None
+2023-07-18 20:23:38,098 - file_logger - INFO - Calling function test_retrieve_users with args () and kwargs {'client': <starlette.testclient.TestClient object at 0x7f0202c63220>, 'superuser_token_headers': {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODk3OTgyMTQsInN1YiI6ImI5YTg1YjliLTQ1MWMtNDNjOS1hMmUwLTFkMGI5YzVhYTEwMyJ9.2Nlxwq49swEJaPK38opLWbjN8p1UNV0C-bCs8DSsjd4'}, 'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:39,053 - file_logger - INFO - Function test_retrieve_users took 0.9547486305236816 seconds to execute
+2023-07-18 20:23:39,054 - file_logger - INFO - Function test_retrieve_users returned None
+2023-07-18 20:23:39,109 - file_logger - INFO - Calling function test_create_item with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:39,563 - file_logger - INFO - Function test_create_item took 0.4511899948120117 seconds to execute
+2023-07-18 20:23:39,564 - file_logger - INFO - Function test_create_item returned None
+2023-07-18 20:23:39,571 - file_logger - INFO - Calling function test_get_item with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:40,024 - file_logger - INFO - Function test_get_item took 0.4519636631011963 seconds to execute
+2023-07-18 20:23:40,025 - file_logger - INFO - Function test_get_item returned None
+2023-07-18 20:23:40,035 - file_logger - INFO - Calling function test_update_item with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:40,494 - file_logger - INFO - Function test_update_item took 0.4581756591796875 seconds to execute
+2023-07-18 20:23:40,495 - file_logger - INFO - Function test_update_item returned None
+2023-07-18 20:23:40,506 - file_logger - INFO - Calling function test_delete_item with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:40,971 - file_logger - INFO - Function test_delete_item took 0.4636814594268799 seconds to execute
+2023-07-18 20:23:40,972 - file_logger - INFO - Function test_delete_item returned None
+2023-07-18 20:23:40,985 - file_logger - INFO - Calling function test_create_user with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:41,432 - file_logger - INFO - Function test_create_user took 0.4458730220794678 seconds to execute
+2023-07-18 20:23:41,433 - file_logger - INFO - Function test_create_user returned None
+2023-07-18 20:23:41,444 - file_logger - INFO - Calling function test_authenticate_user with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:42,327 - file_logger - INFO - Function test_authenticate_user took 0.8819327354431152 seconds to execute
+2023-07-18 20:23:42,328 - file_logger - INFO - Function test_authenticate_user returned None
+2023-07-18 20:23:42,351 - file_logger - INFO - Calling function test_check_if_user_is_active with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:42,796 - file_logger - INFO - Function test_check_if_user_is_active took 0.4447441101074219 seconds to execute
+2023-07-18 20:23:42,797 - file_logger - INFO - Function test_check_if_user_is_active returned None
+2023-07-18 20:23:42,805 - file_logger - INFO - Calling function test_check_if_user_is_active_inactive with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:43,241 - file_logger - INFO - Function test_check_if_user_is_active_inactive took 0.43533921241760254 seconds to execute
+2023-07-18 20:23:43,242 - file_logger - INFO - Function test_check_if_user_is_active_inactive returned None
+2023-07-18 20:23:43,252 - file_logger - INFO - Calling function test_check_if_user_is_superuser with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:43,696 - file_logger - INFO - Function test_check_if_user_is_superuser took 0.44347381591796875 seconds to execute
+2023-07-18 20:23:43,697 - file_logger - INFO - Function test_check_if_user_is_superuser returned None
+2023-07-18 20:23:43,707 - file_logger - INFO - Calling function test_check_if_user_is_superuser_normal_user with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:44,146 - file_logger - INFO - Function test_check_if_user_is_superuser_normal_user took 0.4386887550354004 seconds to execute
+2023-07-18 20:23:44,147 - file_logger - INFO - Function test_check_if_user_is_superuser_normal_user returned None
+2023-07-18 20:23:44,157 - file_logger - INFO - Calling function test_get_user with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:44,600 - file_logger - INFO - Function test_get_user took 0.4425380229949951 seconds to execute
+2023-07-18 20:23:44,602 - file_logger - INFO - Function test_get_user returned None
+2023-07-18 20:23:44,613 - file_logger - INFO - Calling function test_update_user with args () and kwargs {'db': <sqlalchemy.orm.session.Session object at 0x7f0202c63310>}
+2023-07-18 20:23:45,946 - file_logger - INFO - Function test_update_user took 1.3317818641662598 seconds to execute
+2023-07-18 20:23:45,947 - file_logger - INFO - Function test_update_user returned None

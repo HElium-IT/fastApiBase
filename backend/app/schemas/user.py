@@ -2,6 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
+from app.schemas.custom_pydantics import UUIDModelMixin
 
 # Shared properties
 class UserBase(BaseModel):
@@ -24,11 +25,10 @@ class UserUpdate(UserBase):
     full_name: Optional[str]
 
 
-class UserInDBBase(UserBase):
-    id: str
-
-    class Config:
-        orm_mode = True
+class UserInDBBase(UserBase, UUIDModelMixin):
+    email: EmailStr
+    is_active: bool
+    is_superuser: bool
 
 
 # Additional properties to return via API

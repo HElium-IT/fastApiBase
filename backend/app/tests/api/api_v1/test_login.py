@@ -3,8 +3,10 @@ from typing import Dict
 from fastapi.testclient import TestClient
 
 from app.core.config import settings
+from app.tests.utils.file_logger import file_logger
 
 
+@file_logger
 def test_get_access_token(client: TestClient) -> None:
     login_data = {
         "username": settings.FIRST_SUPERUSER,
@@ -17,6 +19,7 @@ def test_get_access_token(client: TestClient) -> None:
     assert result["access_token"]
 
 
+@file_logger
 def test_use_access_token(
     client: TestClient, superuser_token_headers: Dict[str, str]
 ) -> None:
