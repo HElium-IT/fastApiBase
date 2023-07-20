@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     EMAIL_TEST_USER: str
     PASSWORD_TEST_USER: str
 
+    LOG_LEVEL: str
+    
     class Config:
         env_file = '/app/.env'
 

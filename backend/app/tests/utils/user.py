@@ -8,7 +8,6 @@ from app.core.config import settings
 from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 from app.tests.utils.utils import random_email, random_lower_string
-from app.core.security import verify_password
 
 
 def user_authentication_headers(
@@ -23,10 +22,11 @@ def user_authentication_headers(
     headers = {"Authorization": f"Bearer {auth_token}"}
     return headers
 
+
 def create_random_user(db: Session) -> User:
     email = random_email()
     password = random_lower_string()
-    user_in = UserCreate(username=email, email=email, password=password)
+    user_in = UserCreate(email=email, password=password)
     user = crud.user.create(db=db, obj_in=user_in)
     return user
 
@@ -39,19 +39,20 @@ def authentication_token_for_user(
 
     If the user doesn't exist it is created first.
     """
-    
+
     user = crud.user.get_by_email(db, email=settings.EMAIL_TEST_USER)
     if user is None:
-        print("creating test user")
-        user_in_create = UserCreate(email=settings.EMAIL_TEST_USER, password=settings.PASSWORD_TEST_USER)
+        print("creating testUser")
+        user_in_create = UserCreate(
+            email=settings.EMAIL_TEST_USER, password=settings.PASSWORD_TEST_USER)
         user = crud.user.create(db, obj_in=user_in_create)
     else:
-        print("updating test user")
+        print("updating testUser")
         user_in_update = UserUpdate(password=settings.PASSWORD_TEST_USER)
         user = crud.user.update(db, db_obj=user, obj_in=user_in_update)
-    
+
     db.commit()
-    print(f"testingUser: {crud.user.get(db=db, id=user.id).__dict__}")
+    print(f"testing User: {crud.user.get(db=db, id=user.id).__dict__}")
     return user_authentication_headers(client=client, email=settings.EMAIL_TEST_USER, password=settings.PASSWORD_TEST_USER)
 
 
@@ -60,12 +61,13 @@ def authentication_token_for_super_user(
 ) -> Dict[str, str]:
     user = crud.user.get_by_email(db, email=settings.FIRST_SUPERUSER)
     if user is None:
-        print("creating test superUser")
-        user_in_create = UserCreate(email=settings.FIRST_SUPERUSER, password=settings.FIRST_SUPERUSER_PASSWORD, is_superuser=True)
+        print("creating superUser")
+        user_in_create = UserCreate(email=settings.FIRST_SUPERUSER,
+                                    password=settings.FIRST_SUPERUSER_PASSWORD, is_superuser=True)
         user = crud.user.create(db, obj_in=user_in_create)
         db.commit()
-    
-    print(f"testingSuperUser: {user.__dict__}")
+
+    print(f"testing SuperUser: {user.__dict__}")
     return user_authentication_headers(
         client=client, email=settings.FIRST_SUPERUSER, password=settings.FIRST_SUPERUSER_PASSWORD
     )

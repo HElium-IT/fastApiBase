@@ -30,11 +30,13 @@ services:
     build: ./backend
     volumes:
       - ./backend:/app
+      - ./backend/logs:/app/logs
     ports:
       - "8000:8000"
     command: --start
     environment:
       DATABASE_URL: postgresql://default_user:default_password@database:5432/default_db
+      LOG_LEVEL: DEBUG
     networks:
       - backend
 

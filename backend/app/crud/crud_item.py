@@ -10,6 +10,9 @@ from app.schemas.item import ItemCreate, ItemUpdate
 
 
 class CRUDItem(CRUDBase[Item, ItemCreate, ItemUpdate]):
+    def get_by_title(self, db: Session, *, title: str) -> Item:
+        return db.query(Item).filter(Item.title == title).first()
+
     def create_with_owner(
         self, db: Session, *, obj_in: ItemCreate, owner_id: UUID
     ) -> Item:

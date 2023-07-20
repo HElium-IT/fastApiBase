@@ -3,10 +3,10 @@ from sqlalchemy.orm import Session
 # import UUID
 from app.core.config import settings
 from app.tests.utils.item import create_random_item
-from app.tests.utils.file_logger import file_logger
+from app import crud
+from app.tests.utils.utils import random_lower_string
 
 
-@file_logger
 def test_create_item(
     client: TestClient, superuser_token_headers: dict, db: Session
 ) -> None:
@@ -18,13 +18,14 @@ def test_create_item(
     )
     assert response.status_code == 200
     content = response.json()
-    assert content["title"] == data["title"]
-    assert content["description"] == data["description"]
-    assert "id" in content
-    assert "owner_id" in content
+
+    db_item = crud.item.get(db, id=content["id"])
+    assert content["title"] == db_item.title
+    assert content["description"] == db_item.description
+    assert content["id"] == str(db_item.id)
+    assert content["owner_id"] == str(db_item.owner_id)
 
 
-@file_logger
 def test_read_item(
     client: TestClient, superuser_token_headers: dict, db: Session
 ) -> None:

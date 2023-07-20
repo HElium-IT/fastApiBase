@@ -5,9 +5,11 @@ from app.dependencies import get_db
 
 logger = Logger(__name__)
 
+
 def startup():
     print("Running startup functions")
     create_first_super_user()
+
 
 def create_first_super_user():
     db = next(get_db())
@@ -23,4 +25,3 @@ def create_first_super_user():
         user = crud.user.create(db, obj_in=user_in)
         db.commit()
         print(f"Created first superuser: {user.email} - {user.id}")
-

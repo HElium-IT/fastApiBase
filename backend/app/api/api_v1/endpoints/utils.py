@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post("/test-email/", response_model=schemas.Msg, status_code=201)
-def test_email(
+async def test_email(
     email_to: EmailStr,
     current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
@@ -22,5 +22,5 @@ def test_email(
     return {"msg": "Test email sent"}
 
 @router.get('/status')
-def status():
+async def status():
     return {'api': 'Ok'}

@@ -5,13 +5,15 @@ from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
 from app import dependencies as deps
-from app.decorators import db_commit
+from app.decorators import db_commit, log, logger
 
 router = APIRouter()
 
-@db_commit
+
 @router.get("/", response_model=List[schemas.Item])
-def read_items(
+@db_commit
+@log
+async def read_items(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
@@ -28,9 +30,11 @@ def read_items(
         )
     return items
 
-@db_commit
+
 @router.post("/", response_model=schemas.Item)
-def create_item(
+@db_commit
+@log
+async def create_item(
     *,
     db: Session = Depends(deps.get_db),
     item_in: schemas.ItemCreate,
@@ -39,12 +43,15 @@ def create_item(
     """
     Create new item.
     """
-    item = crud.item.create_with_owner(db=db, obj_in=item_in, owner_id=current_user.id)
+    item = crud.item.create_with_owner(
+        db=db, obj_in=item_in, owner_id=current_user.id)
     return item
 
-@db_commit
+
 @router.put("/{id}", response_model=schemas.Item)
-def update_item(
+@db_commit
+@log
+async def update_item(
     *,
     db: Session = Depends(deps.get_db),
     id: str,
@@ -62,9 +69,11 @@ def update_item(
     item = crud.item.update(db=db, db_obj=item, obj_in=item_in)
     return item
 
-@db_commit
+
 @router.get("/{id}", response_model=schemas.Item)
-def read_item(
+@db_commit
+@log
+async def read_item(
     *,
     db: Session = Depends(deps.get_db),
     id: str,
@@ -82,7 +91,8 @@ def read_item(
 
 
 @router.delete("/{id}", response_model=schemas.Item)
-def delete_item(
+@log
+async def delete_item(
     *,
     db: Session = Depends(deps.get_db),
     id: str,

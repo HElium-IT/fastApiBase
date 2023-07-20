@@ -5,16 +5,15 @@
 from functools import wraps
 from sqlalchemy.exc import SQLAlchemyError
 
+
 def db_commit(func):
     @wraps(func)
-    def wrapper(*args, **kwargs):
+    async def wrapper(*args, **kwargs):
         try:
-            result = func(*args, **kwargs)
+            result = await func(*args, **kwargs)
             kwargs.get('db').commit()
             return result
         except SQLAlchemyError as e:
             kwargs.get('db').rollback()
             raise e
     return wrapper
-    
-

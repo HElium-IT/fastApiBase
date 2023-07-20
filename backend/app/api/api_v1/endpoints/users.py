@@ -9,13 +9,15 @@ from app import crud, models, schemas
 from app import dependencies as deps
 from app.core.config import settings
 from app.core.utils import send_new_account_email
-from app.decorators import db_commit
+from app.decorators import db_commit, log, logger
 
 router = APIRouter()
 
-@db_commit
+
 @router.get("/", response_model=List[schemas.User])
-def read_users(
+@db_commit
+@log
+async def read_users(
     db: Session = Depends(deps.get_db),
     skip: int = 0,
     limit: int = 100,
@@ -27,12 +29,14 @@ def read_users(
     users = crud.user.get_multi(db, skip=skip, limit=limit)
     return users
 
-@db_commit
+
 @router.post("/", response_model=schemas.User)
-def create_user(
+@db_commit
+@log
+async def create_user(
     *,
     db: Session = Depends(deps.get_db),
-    user_in: schemas.UserCreate,
+    user_in: schemas.UserCreate = Body(None),
     current_user: models.User = Depends(deps.get_current_active_superuser),
 ) -> Any:
     """
@@ -42,18 +46,20 @@ def create_user(
     if user:
         raise HTTPException(
             status_code=400,
-            detail="The user with this username already exists in the system.",
+            detail="The user with this email already exists in the system.",
         )
     user = crud.user.create(db, obj_in=user_in)
     if settings.EMAILS_ENABLED and user_in.email:
         send_new_account_email(
-            email_to=user_in.email, username=user_in.email, password=user_in.password
+            email_to=user_in.email, email=user_in.email, password=user_in.password
         )
     return user
 
-@db_commit
+
 @router.put("/me", response_model=schemas.User)
-def update_user_me(
+@db_commit
+@log
+async def update_user_me(
     *,
     db: Session = Depends(deps.get_db),
     password: str = Body(None),
@@ -75,9 +81,11 @@ def update_user_me(
     user = crud.user.update(db, db_obj=current_user, obj_in=user_in)
     return user
 
-@db_commit
+
 @router.get("/me", response_model=schemas.User)
-def read_user_me(
+@db_commit
+@log
+async def read_user_me(
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
@@ -86,9 +94,11 @@ def read_user_me(
     """
     return current_user
 
-@db_commit
+
 @router.post("/open", response_model=schemas.User)
-def create_user_open(
+@db_commit
+@log
+async def create_user_open(
     *,
     db: Session = Depends(deps.get_db),
     password: str = Body(...),
@@ -107,15 +117,18 @@ def create_user_open(
     if user:
         raise HTTPException(
             status_code=400,
-            detail="The user with this username already exists in the system",
+            detail="The user with this email already exists in the system",
         )
-    user_in = schemas.UserCreate(password=password, email=email, full_name=full_name)
+    user_in = schemas.UserCreate(
+        password=password, email=email, full_name=full_name)
     user = crud.user.create(db, obj_in=user_in)
     return user
 
-@db_commit
+
 @router.get("/{user_id}", response_model=schemas.User)
-def read_user_by_id(
+@db_commit
+@log
+async def read_user_by_id(
     user_id: str,
     current_user: models.User = Depends(deps.get_current_active_user),
     db: Session = Depends(deps.get_db),
@@ -132,9 +145,11 @@ def read_user_by_id(
         )
     return user
 
-@db_commit
+
 @router.put("/{user_id}", response_model=schemas.User)
-def update_user(
+@db_commit
+@log
+async def update_user(
     *,
     db: Session = Depends(deps.get_db),
     user_id: str,
@@ -148,7 +163,7 @@ def update_user(
     if not user:
         raise HTTPException(
             status_code=404,
-            detail="The user with this username does not exist in the system",
+            detail="The user with this email does not exist in the system",
         )
     user = crud.user.update(db, db_obj=user, obj_in=user_in)
     return user

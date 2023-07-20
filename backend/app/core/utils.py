@@ -59,7 +59,7 @@ def send_reset_password_email(email_to: str, email: str, token: str) -> None:
         html_template=template_str,
         environment={
             "project_name": settings.PROJECT_NAME,
-            "username": email,
+            "email": email,
             "email": email_to,
             "valid_hours": settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS,
             "link": link,
@@ -67,9 +67,9 @@ def send_reset_password_email(email_to: str, email: str, token: str) -> None:
     )
 
 
-def send_new_account_email(email_to: str, username: str, password: str) -> None:
+def send_new_account_email(email_to: str, email: str, password: str) -> None:
     project_name = settings.PROJECT_NAME
-    subject = f"{project_name} - New account for user {username}"
+    subject = f"{project_name} - New account for user {email}"
     with open(Path(settings.EMAIL_TEMPLATES_DIR) / "new_account.html") as f:
         template_str = f.read()
     link = settings.SERVER_HOST
@@ -79,7 +79,7 @@ def send_new_account_email(email_to: str, username: str, password: str) -> None:
         html_template=template_str,
         environment={
             "project_name": settings.PROJECT_NAME,
-            "username": username,
+            "email": email,
             "password": password,
             "email": email_to,
             "link": link,
@@ -102,7 +102,8 @@ def generate_password_reset_token(email: str) -> str:
 
 def verify_password_reset_token(token: str) -> Optional[str]:
     try:
-        decoded_token = jwt.decode(token, settings.JWT_PRIVATE_KEY, algorithms=["HS256"])
+        decoded_token = jwt.decode(
+            token, settings.JWT_PRIVATE_KEY, algorithms=["HS256"])
         return decoded_token["email"]
     except jwt.JWTError:
         return None
