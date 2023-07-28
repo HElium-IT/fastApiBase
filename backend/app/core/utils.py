@@ -60,7 +60,7 @@ def send_reset_password_email(email_to: str, email: str, token: str) -> None:
         environment={
             "project_name": settings.PROJECT_NAME,
             "email": email,
-            "email": email_to,
+            "email_to": email_to,
             "valid_hours": settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS,
             "link": link,
         },
@@ -81,7 +81,7 @@ def send_new_account_email(email_to: str, email: str, password: str) -> None:
             "project_name": settings.PROJECT_NAME,
             "email": email,
             "password": password,
-            "email": email_to,
+            "email_to": email_to,
             "link": link,
         },
     )
