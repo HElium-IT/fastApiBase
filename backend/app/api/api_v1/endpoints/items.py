@@ -91,6 +91,7 @@ async def read_item(
 
 
 @router.delete("/{id}", response_model=schemas.Item)
+@db_commit
 @log
 async def delete_item(
     *,
